@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)https://w1907421.users.ecs.westminster.ac.uk/webdev/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Quiz</title>
+  <style>
+	body {
+	  font-family: Arial, sans-serif;
+	  background-color: #222;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  height: 100vh;
+	  margin: 0;
+	}
+
+	nav {
+	  width: 100%;
+	  background-color: #444;
+	  padding: 1rem 0;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  z-index: 10;
+	}
+
+	.nav-container {
+	  max-width: 1200px;
+	  margin: 0 auto;
+	}
+
+	.nav-title {
+	  color: #ffffff;
+	  font-size: 1.5rem;
+	  font-weight: bold;
+	  text-align: center;
+	}
+	
+	.nav-links {
+	  list-style-type: none;
+	  display: flex;
+	  justify-content: flex-end;
+	  align-items: center;
+	  margin: 0;
+	  padding: 0;
+	}
+
+	.nav-links li {
+	  margin-left: 1rem;
+	}
+
+	.nav-links a {
+	  color: #ffffff;
+	  text-decoration: none;
+	  font-weight: bold;
+	}
+
+	.nav-links a:hover {
+	  text-decoration: underline;
+	}
+
+	#quiz-container {
+	  background-color: #333;
+	  color: #f0f0f0;
+	  padding: 2rem;
+	  border-radius: 10px;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  text-align: center;
+	  margin-top: 3rem;
+	}
+
+	button {
+	  background-color: #1e90ff;
+	  color: #ffffff;
+	  border: none;
+	  padding: 10px 20px;
+	  font-size: 1rem;
+	  border-radius: 5px;
+	  cursor: pointer;
+	}
+
+	button:hover {
+	  background-color: #007acc;
+	}
+
+	footer {
+	  width: 100%;
+	  padding: 1rem 0;
+	  background-color: #444;
+	  color: #f0f0f0;
+	  font-size: 1rem;
+	  text-align: center;
+	  position: fixed;
+	  bottom: 0;
+	  left: 0;
+	}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="nav-title">Football Quiz</div>
+	  <ul class="nav-links">
+        <li><a href="https://w1907421.users.ecs.westminster.ac.uk/webdev/index.html#">Quiz</a></li>
+        <li><a href="https://w1907421.users.ecs.westminster.ac.uk/webdev/students.html">Students</a></li>
+        <li><a href="https://w1907421.users.ecs.westminster.ac.uk/webdev/football.html">Football History</a></li>
+	<li><a href="https://w1907421.users.ecs.westminster.ac.uk/webdev/editor.html">Page Editor</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="quiz-container">
+    <h1>Football Quiz</h1>
+    <div id="question-container">
+		<h2>What was the score in the Euro 2012 final?</h2>
+		<div>
+		  <label><input type="radio" name="answer" value="0"> 2-0</label><label><input type="radio" name="answer" value="1"> 3-0</label><label><input type="radio" name="answer" value="2"> 4-0</label><label><input type="radio" name="answer" value="3"> 5-0</label>
+		</div>
+	  </div>
+	<div id="countdown"></div>
+  </div>
+  <footer>
+    Created by Jake Lazaros w1907421
+  </footer>
+  <script>
+    const quizContainer = document.getElementById("quiz-container");
+	const questionContainer = document.getElementById("question-container");
+	const countdownElement = document.getElementById("countdown");
+
+	const questions = [
+	  {
+		question: "What was the score in the Euro 2012 final?",
+		answers: ["2-0", "3-0", "4-0", "5-0"],
+		correctAnswer: "4-0",
+	  },
+          {
+		question: "Who won the Man of the Match award in the 2014 World Cup final?",
+		answers: ["Mario Goetze", "Sergio Aguero", "Lionel Messi", "Bastian Schweinsteiger"],
+		correctAnswer: "Mario Goetze",
+	  },
+          {		
+		question: "Against which country did Wayne Rooney break the England goalscoring record?",
+		answers: ["Switzerland", "San Marino", "Lithuania", "Slovenia"],
+		correctAnswer: "Switzerland",
+	  },
+	];
+
+	let currentQuestionIndex = 0;
+
+	function showQuestion() {
+	  const currentQuestion = questions[currentQuestionIndex];
+	  questionContainer.innerHTML = `
+		<h2>${currentQuestion.question}</h2>
+		<div>
+		  ${currentQuestion.answers
+			.map(
+			  (answer, i) =>
+				`<label><input type="radio" name="answer" value="${i}"> ${answer}</label>`
+			)
+			.join("")}
+		</div>
+	  `;
+
+	  const inputs = questionContainer.querySelectorAll('input[type="radio"]');
+
+	  inputs.forEach((input, index) => {
+		input.addEventListener("change", () => {
+		  inputs.forEach((input) => (input.disabled = true));
+		  const label = input.parentElement;
+		  if (currentQuestion.answers[index] === currentQuestion.correctAnswer) {
+			label.style.backgroundColor = "green";
+		  } else {
+			label.style.backgroundColor = "red";
+		  }
+
+		  startCountdown();
+		});
+	  });
+	}
+
+	function startCountdown() {
+	  let timeLeft = 5;
+
+	  countdownElement.textContent = `Next question in ${timeLeft} seconds...`;
+
+	  const countdownInterval = setInterval(() => {
+		timeLeft--;
+
+		if (timeLeft > 0) {
+		  countdownElement.textContent = `Next question in ${timeLeft} seconds...`;
+		} else {
+		  clearInterval(countdownInterval);
+		  countdownElement.textContent = "";
+
+		  currentQuestionIndex++;
+		  if (currentQuestionIndex < questions.length) {
+			showQuestion();
+		  } else {
+			quizContainer.innerHTML = "<h2>Quiz complete!</h2>";
+		  }
+		}
+	  }, 1000);
+	}
+
+	showQuestion();
+  </script>
+
+
+<div id="SASContainer" class="sasext sasextdklgc sasdklgc-display-none ui-resizable ui-draggable">
+			<div id="sas-panel-contents">
+				<div class="first-row ui-draggable-handle"> <div class="t-logo">
+						<a href="https://selleramp.com/" target="_blank"><img class="sas-logo-image" src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/sas-logo-mono2.png"></a> 
+					</div>
+					<div class="tr-btns">
+						<span style="float:right"><a id="closeSAS" class="topButton"></a></span>
+					</div>
+				</div><div class="second-row"><div id="loadingMessage"><img class="loadingimg" src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/exticon.png" "=""></div><iframe name="sasFrame" id="sasFrame" allowtransparency="true" src="./Football Quiz_files/saved_resource.html"></iframe></div><div class="bottom-row"><nav class="sasdklgc-menu"><ul id="position-buttons" class="sasdklgc-toolbar-buttons"><li class="left" id="li-pos-0" data-position="0"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/floating.png" title="Floating"></li><li class="left" id="li-pos-1" data-position="1"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/docked-left.png" title="Docked Left"></li><li class="left" id="li-pos-2" data-position="2"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/docked-right.png" title="Docked Right"></li></ul><ul id="url-buttons" class="sasdklgc-toolbar-buttons"><li id="home-btn"><a href="https://sas.selleramp.com/sas/lookup?src=ext&amp;ver=0.0.42e" target="sasFrame"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/home.png" title="Home"></a></li><li id="history-btn"><a href="https://sas.selleramp.com/sas/history?src=ext&amp;ver=0.0.42e" target="sasFrame"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/history.png" title="History"></a></li><li id="settings-btn"><a href="https://sas.selleramp.com/user/update?src=ext&amp;ver=0.0.42e" target="sasFrame"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/settings.png" title="Settings"></a></li><li id="contact-btn"><a href="mailto:support@selleramp.com" target="_blank"><img src="chrome-extension://kidmffepbniamfbibhfgdakkggchipjl/images/envelope.png" title="Contact"></a></li></ul></nav></div></div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div></div></body></html>

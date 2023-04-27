@@ -1,0 +1,43 @@
+body{
+    background-color: darkblue;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+nav li{
+    display:inline-block;
+    width:175px;
+}
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:white;
+    height: 50px;
+    width:115%;
+}
+
+a:link { color: green; } 
+a:visited { color: black; } 
+a:hover { color: blue; }
+a { text-decoration: none; }
+a:hover { color: blue; text-decoration: underline; }
+
+.center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.center img {
+    margin: 30px;
+    max-width: 30%;
+    max-height: 30%;
+}
+
+h1{
+    margin-top: 50px;
+    color:white;
+}

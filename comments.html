@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments</title>
+    <style>
+     #feedback{
+        width: 50%;
+    }
+    body{
+
+    font-family:Arial, Helvetica, sans-serif;
+}
+    </style>
+</head>
+<body>
+    <h1>Comments Form</h1>
+    <br>
+    <form action="mailto:w1899125@westminster.ac.uk" method="GET">
+        <div>
+            <label for="rating">How satisfied were you with our website today. choose from 0 to 10 on how satisfied you were today.</label><br>
+            <input type="radio" id="rating0" name="rating" value="0" required>
+            <label for="rating0">0</label>
+            <input type="radio" id="rating1" name="rating" value="1" required>
+            <label for="rating1">1</label>
+            <input type="radio" id="rating2" name="rating" value="2" required>
+            <label for="rating2">2</label>
+            <input type="radio" id="rating3" name="rating" value="3" required>
+            <label for="rating3">3</label>
+            <input type="radio" id="rating1" name="rating" value="4" required>
+            <label for="rating4">4</label>
+            <input type="radio" id="rating5" name="rating" value="5" required>
+            <label for="rating5">5</label>
+            <input type="radio" id="rating6" name="rating" value="6" required>
+            <label for="rating6">6</label>
+            <input type="radio" id="rating7" name="rating" value="7" required>
+            <label for="rating7">7</label>
+            <input type="radio" id="rating8" name="rating" value="8" required>
+            <label for="rating8">8</label>
+            <input type="radio" id="rating9" name="rating" value="9" required>
+            <label for="rating9">9</label>
+            <input type="radio" id="rating10" name="rating" value="10" required>
+            <label for="rating10">10</label>
+        </div>
+
+        <div>
+            <label for="feedback">please could you tell us the reason for the given ratings:</label><br>
+            <textarea id="feedback" name="feedback"></textarea required><br>
+        </div>
+
+        <div>
+            <label for="options">how do you want to complete this task today? (optional)</label><br>
+            <select name="options" id="options" >
+                <option value="--please select--">--please select--</option>
+                <option label="phone">phone</option>
+                <option label="website">website</option>
+                <option label="webchat">webchat</option>
+                <option label="social media">social media</option>
+                <option label="email">email</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="options2">if you had to complete this task again, how would you prefer to do it (optional)</label><br>
+            <select name="options2" id="options2" >
+                <option value="--please select--">--please select--</option>
+                <option label="phone">phone</option>
+                <option label="website">website</option>
+                <option label="webchat">webchat</option>
+                <option label="social media">social media</option>
+                <option label="email">email</option>
+            </select>         
+        </div>
+
+        <div>
+            <input type="reset" name="button" value="reset">
+        </div>
+        <div>
+            <input type="submit" name="button" value="submit">
+        </div>
+
+    </form>
+</body>
+</html>
